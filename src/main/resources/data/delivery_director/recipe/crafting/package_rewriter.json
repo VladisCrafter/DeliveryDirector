@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " A ",
+    " B ",
+    " C "
+  ],
+  "key": {
+    "A": {
+      "item": "create:clipboard"
+    },
+    "B": {
+      "item": "create:packager"
+    },
+    "C": {
+      "item": "create:brass_sheet"
+    }
+  },
+  "result": {
+    "id": "delivery_director:package_rewriter"
+  }
+}
