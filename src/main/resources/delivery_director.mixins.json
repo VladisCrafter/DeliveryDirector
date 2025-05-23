@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "net.liukrast.dd.mixin",
   "compatibilityLevel": "JAVA_8",
-  "refmap": "delivery_director.refmap.json",
+  "refmap": "extra_gauges.refmap.json",
   "mixins": [
   ],
   "client": [

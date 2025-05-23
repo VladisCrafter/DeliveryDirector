@@ -1,6 +1,5 @@
 package net.liukrast.dd.content;
 
-import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.content.equipment.clipboard.ClipboardBlockEntity;
 import com.simibubi.create.content.logistics.box.PackageItem;
 import com.simibubi.create.content.logistics.crate.BottomlessItemHandler;
@@ -12,14 +11,14 @@ import net.createmod.catnip.data.Pair;
 import net.liukrast.dd.registry.RegisterBlockEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.entity.SignText;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
@@ -41,13 +40,18 @@ public class PackageRewriterBlockEntity extends PackagerBlockEntity {
                         return Pair.of(regex, replacement);
                 }
             } else if(blockEntity instanceof ClipboardBlockEntity clipboard) {
-                var data = clipboard.dataContainer.get(AllDataComponents.CLIPBOARD_PAGES);
-                if(data == null) continue;
-                var firstPage = data.getFirst();
-                if(firstPage == null) continue;
+                var temp_1928 = clipboard.dataContainer.getTag();
+                if(temp_1928 == null) continue;
+                var data = temp_1928.getList("Pages", Tag.TAG_COMPOUND);
+                if(data.isEmpty()) continue;
+                var temp_192o81988 = data.getCompound(0);
+                var firstPage = temp_192o81988.getList("Entries", Tag.TAG_COMPOUND);
                 if(firstPage.isEmpty()) continue;
-                var regex = firstPage.getFirst().text.getString();
-                var replacement = firstPage.size() > 1 ? firstPage.get(1).text.getString() : "";
+                var temp_0 = Component.Serializer.fromJson(firstPage.getCompound(0).getString("Text"));
+                if(temp_0 == null) continue;
+                var regex = temp_0.getString();
+                var temp_1 = Component.Serializer.fromJson(firstPage.getCompound(1).getString("Text"));
+                var replacement = firstPage.size() > 1 && temp_1 != null ? temp_1.getString() : "";
                 if (!regex.isBlank())
                     return Pair.of(regex, replacement);
             }
@@ -132,13 +136,5 @@ public class PackageRewriterBlockEntity extends PackagerBlockEntity {
     @Override
     public boolean redstoneModeActive() {
         return true;
-    }
-
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                RegisterBlockEntityTypes.PACKAGE_REWRITER.get(),
-                (be, context) -> be.inventory
-        );
     }
 }

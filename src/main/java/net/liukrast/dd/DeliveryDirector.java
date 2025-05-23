@@ -1,54 +1,46 @@
 package net.liukrast.dd;
 
-import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.content.logistics.packager.PackagerRenderer;
 import com.simibubi.create.content.logistics.packager.PackagerVisual;
 import dev.engine_room.flywheel.lib.visualization.SimpleBlockEntityVisualizer;
 import net.createmod.ponder.foundation.PonderIndex;
-import net.liukrast.dd.content.PackageRewriterBlockEntity;
 import net.liukrast.dd.registry.RegisterBlockEntityTypes;
 import net.liukrast.dd.registry.RegisterBlocks;
 import net.minecraft.world.item.CreativeModeTab;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.client.event.EntityRenderersEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(DeliveryDirector.MOD_ID)
 public class DeliveryDirector {
     public static final String MOD_ID = "delivery_director";
 
 
-    public DeliveryDirector(IEventBus modEventBus, ModContainer ignored) {
+    public DeliveryDirector() {
+        @SuppressWarnings("removal") var modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         RegisterBlocks.register(modEventBus);
         RegisterBlockEntityTypes.register(modEventBus);
         modEventBus.register(this);
     }
 
     @SubscribeEvent
-    private void addCreative(BuildCreativeModeTabContentsEvent event) {
+    public void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == AllCreativeModeTabs.BASE_CREATIVE_TAB.getKey()) {
-            event.insertAfter(AllBlocks.REPACKAGER.asStack(), RegisterBlocks.PACKAGE_REWRITER.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.accept(RegisterBlocks.PACKAGE_REWRITER.get().asItem(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 
     @SubscribeEvent
-    private void registerCapabilities(RegisterCapabilitiesEvent event) {
-        PackageRewriterBlockEntity.registerCapabilities(event);
-    }
-
-    @SubscribeEvent
-    private void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    public void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerBlockEntityRenderer(RegisterBlockEntityTypes.PACKAGE_REWRITER.get(), PackagerRenderer::new);
     }
 
     @SubscribeEvent
-    private void fmlClientSetupEvent(FMLClientSetupEvent event) {
+    public void fmlClientSetupEvent(FMLClientSetupEvent event) {
         SimpleBlockEntityVisualizer.builder(RegisterBlockEntityTypes.PACKAGE_REWRITER.get())
                 .factory(PackagerVisual::new)
                 .skipVanillaRender($1 -> false)

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import org.lwjgl.system.NonnullDefault;
 
+@SuppressWarnings("deprecation")
 @NonnullDefault
 public class DeliveryDirectorPonderPlugin implements PonderPlugin {
 
@@ -23,7 +24,7 @@ public class DeliveryDirectorPonderPlugin implements PonderPlugin {
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<Item> HELPER = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
 
-        HELPER.forComponents(RegisterBlocks.PACKAGE_REWRITER.asItem())
+        HELPER.forComponents(RegisterBlocks.PACKAGE_REWRITER.get().asItem())
                 .addStoryBoard("high_logistics/package_rewriter", PackageRewriterPonderScene::packageRewriter);
     }
 
@@ -32,6 +33,6 @@ public class DeliveryDirectorPonderPlugin implements PonderPlugin {
         var HELPER = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
 
         HELPER.addToTag(AllCreatePonderTags.HIGH_LOGISTICS)
-                .add(RegisterBlocks.PACKAGE_REWRITER.asItem());
+                .add(RegisterBlocks.PACKAGE_REWRITER.get().asItem());
     }
 }
