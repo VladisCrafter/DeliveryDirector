@@ -4,7 +4,7 @@
   "delivery_director.ponder.package_rewriter.text_1": "I Ri-Scrittori di pacchi permettono di cambiare l'indirizzo di un pacco",
   "delivery_director.ponder.package_rewriter.text_2": "Il mio Deposito",
   "delivery_director.ponder.package_rewriter.text_3": "Il Ri-Scrittore cercherà i testi che combaciano con la prima riga del cartello attaccato...",
-  "delivery_director.ponder.package_rewriter.text_4": "...e sostituiranno le occorrenze con il testo nella seconda riga del cartello.",
+  "delivery_director.ponder.package_rewriter.text_4": "...e sostituirà le occorrenze con il testo nella seconda riga del cartello.",
   "delivery_director.ponder.package_rewriter.text_5": "§cDeposito\n§aMagazzino",
   "delivery_director.ponder.package_rewriter.text_6": "Il mio Magazzino",
   "delivery_director.ponder.package_rewriter.text_7": "Le espressioni regolari (Regex) possono essere usate per modifiche complesse",
