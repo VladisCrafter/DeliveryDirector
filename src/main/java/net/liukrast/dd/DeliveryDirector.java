@@ -1,6 +1,5 @@
 package net.liukrast.dd;
 
-import com.mojang.logging.LogUtils;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.content.logistics.packager.PackagerRenderer;
@@ -19,12 +18,10 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import org.slf4j.Logger;
 
 @Mod(DeliveryDirector.MOD_ID)
 public class DeliveryDirector {
     public static final String MOD_ID = "delivery_director";
-    private static final Logger LOGGER = LogUtils.getLogger();
 
 
     public DeliveryDirector(IEventBus modEventBus, ModContainer ignored) {
