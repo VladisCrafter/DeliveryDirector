@@ -1,0 +1,7 @@
+{
+	"parent": "create:block/repackager/block",
+	"render_type": "minecraft:cutout_mipped",
+	"textures": {
+		"2": "delivery_director:block/package_rewriter_horizontal_powered"
+	}
+}
