@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "delivery_director:package_rewriter"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "delivery_director:blocks/package_rewriter"
+}
